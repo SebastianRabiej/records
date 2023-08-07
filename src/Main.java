@@ -8,61 +8,55 @@ public class Main {
 
   private static void last_step() {
     //how java 21 is amazing -> połączenie dwóch porpzednich kroków
-    var point1 = new Point2(2, 10);
-    var point2 = new Point2(0, 10);
-    var point3 = new Point2(-10, 10);
+    var point1 = new Point(2, 10);
+    var point2 = new Point(0, 10);
+    var point3 = new Point(-10, 10);
     System.out.println(pointsSwitch(point1));
     System.out.println(pointsSwitch(point2));
     System.out.println(pointsSwitch(point3));
   }
 
-  record Point2(int x, int y) {} //TODO rename
+  record Point(int x, int y) {} //TODO rename
+  record Line(int x, int y, int length) {} //TODO rename
 
-  static String pointsSwitch(Point2 point) {
+  static String pointsSwitch(Point point) {
     return switch (point) {
-      case Point2(int x, int _) when x>0 -> "x is higher than 0";
-      case Point2(int x, int _) when x == 0  -> "x is equal than 0";
-      case Point2(int x, int y) -> String.format("x: %d, y: %d", x, y);
-      default        -> point.toString();
+      case Point(int x, int _) when x>0 -> "x is higher than 0";
+      case Point(int x, int y) -> "x:" + x + "y:" + y;
+      default        -> "Something went wrong";
     };
   }
 
   private static void switch_second_step() {
     //show code of both methods, how they are different
-    formatter(23);
-    formatterPatternSwitch(23);
+    System.out.println(formatter(new Point(2, 10)));
+    System.out.println(formatterPatternSwitch(new Point(2, 10)));
   }
 
   static String formatter(Object obj) {
-    String formatted = "unknown";
-    if (obj instanceof Integer i) {
-      formatted = String.format("int %d", i);
-    } else if (obj instanceof Long l) {
-      formatted = String.format("long %d", l);
-    } else if (obj instanceof Double d) {
-      formatted = String.format("double %f", d);
-    } else if (obj instanceof String s) {
-      formatted = String.format("String %s", s);
+    if (obj instanceof Point p) {
+      return "It's a point!";
+    } else if (obj instanceof Line l) {
+      return "It's a line with length: " + l.length();
+    } else {
+      return "It's nothing";
     }
-    return formatted;
   }
 
   static String formatterPatternSwitch(Object obj) {
     return switch (obj) {
-      case Integer i -> String.format("int %d", i);
-      case Long l    -> String.format("long %d", l);
-      case Double d  -> String.format("double %f", d);
-      case String s  -> String.format("String %s", s);
-      default        -> obj.toString();
+      case Point p -> "It's a point!";
+      case Line l  -> "It's a line with length: " + l.length();
+      default      -> "It's nothing";
     };
   }
 
   private static void records_first_step() {
     //Before Java 21
-    record Point(int x, int y) {}
+    record Point2(int x, int y) {}
 
-    var point = new Point(2, 3);
-    if (point instanceof Point p) {
+    var point = new Point2(2, 3);
+    if (point instanceof Point2 p) {
       int x = p.x();
       int y = p.y();
       System.out.println("x: " + x);
@@ -70,7 +64,7 @@ public class Main {
     }
 
     //As of Java 21
-    if (point instanceof Point(int x, int y)) {
+    if (point instanceof Point2(int x, int y)) {
       System.out.println("x: " + x);
       System.out.println("y: " + y);
     }
