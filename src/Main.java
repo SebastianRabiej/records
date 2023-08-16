@@ -35,19 +35,19 @@ public class Main {
 
   static String formatter(Object obj) {
     if (obj instanceof Point p) {
-      return "It's a point!";
+      return "I'm a point!";
     } else if (obj instanceof Line l) {
-      return "It's a line with length: " + l.length();
+      return "I have length: " + l.length();
     } else {
-      return "It's nothing";
+      return "I'm' nothing";
     }
   }
 
   static String formatterPatternSwitch(Object obj) {
     return switch (obj) {
-      case Point p -> "It's a point!";
-      case Line l  -> "It's a line with length: " + l.length();
-      default      -> "It's nothing";
+      case Point p -> "I'm a point!";
+      case Line l  -> "I have length: " + l.length();
+      default      -> "I'm' nothing";
     };
   }
 
